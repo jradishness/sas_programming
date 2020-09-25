@@ -1,5 +1,5 @@
 # sas_programming
-Repository of Programs developed for UNT UIS
+Repository of Programs developed by Jared Kelly for UNT University Information Services.
 
 All programs are stored either in the SAS DATA PROJECTS folder in the shared drive, 
 or in the FRISCO GUIDED PATHS directory inside there.
