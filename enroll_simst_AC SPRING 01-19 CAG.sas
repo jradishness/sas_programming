@@ -1,21 +1,22 @@
 /* 1CURRENT   2CENSUS_DT  2REVIEW  3OFFICIAL  */
 /* 2REVIEW is period after census date and before official. Daily changes from clean-up will be seen*/;
+/*file1 below is for SAS EIS (ex. simsterm_2017z_official) and file2 is for SAS SIMSTERM (ex. s2017z*/;
 
 LIBNAME MYORALIB oracle user='strdsowner' password='Stt_high5' path='LSRDSPD'  SCHEMA=STRDSOWNER;
-LIBNAME IN1 "S:\UIS\Shared\SAS Data Projects\Simsterm\";
 run;
 
-%let enamesave = "S:\UIS\Shared\SAS Data Projects\enrollment_records\ENROLLEMENT_DW_2020Z_%sysfunc(today(),mmddyy6.)";	*%sysfunc(today(),mmddyy6.) CURRENT ENROLLMENT SAVE DIRECTORY AND NAME;
-%let snamesave = "S:\UIS\Shared\SAS Data Projects\simsterm_records\s2020z_%sysfunc(today(),mmddyy6.)";
-%let run_type = 1CURRENT;		* RUN_TYPE MACRO SETTING - 1CURRENT   2CENSUS_DT  2REVIEW  3OFFICIAL; 
-%let term=1208;			* first digit is ____ (typically a '1'), second and third digit are last two of year, fourth digit is semester (1=spring, 3=summer, 8=fall);
-%let term2=2020Z;		* four digit year, then semester code (Z=fall, C=spring, GIM=summer);
+%let fnamesave = "C:\Users\vac0019\OneDrive - UNT System\SAS Data Projects\FriscoEnrollment\EnrollmentRecords\enrollement_dw_2019CAG";	* CURRENT ENROLLMENT SAVE DIRECTORY AND NAME;
+%let run_type =3OFFICIAL;		* RUN_TYPE MACRO SETTING - 1CURRENT   2CENSUS_DT  2REVIEW  3OFFICIAL; 
 
 options symbolgen;
 
+%macro create(term=1191, term2=2019C, run=3OFFICIAL, file1=simsterm_s2019CAG, file2=s2019CAG); ** on file1 official 20th_class_day;
+
+LIBNAME IN1 "S:\UIS\Shared\SAS Data Projects\Simsterm\";
+ 
 DATA SIMSTERM_ORIG;
 SET MYORALIB.NTSR_IR_SIMSTERM_ARCH;
-IF STRM ="&term" AND DW_RUN_DESC = "&run_type";
+IF STRM ="&term" AND DW_RUN_DESC = "&run";
 RUN;
 
 ********************RUN THIS SECTION TO CREATE BEFORE GRADE FILE***********************;
@@ -325,16 +326,21 @@ RETAIN EMPLID NAME STRM SEMESTER /*term  */
 SET SIMSTERM;
 RUN;
 
-DATA &snamesave;
+DATA "C:\Users\vac0019\OneDrive - UNT System\SAS Data Projects\FriscoEnrollment\Simsterm\&file2";
 SET SIMSTERM;
 RUN;
 
+%end;
+
+%mend create;
+
+%create();
 /* 1CURRENT  2CENSUS_DT  2REVIEW  3OFFICIAL 0AFT_GRADE*/
 /* 2REVIEW is period after census date and before official. Daily changes from clean-up can be seen*/
 
 DATA ENROLL_ORIG;
   	SET MYORALIB.NTSR_IR_STU_ENRL_ARCH;
-  	IF STRM="&term" AND DW_RUN_DESC="&run_type";
+  	IF STRM='1191' AND DW_RUN_DESC='3OFFICIAL';
 RUN;
 
 DATA ENROLL_ORIG;
@@ -349,7 +355,7 @@ SET ENROLL_ORIG;
 IF INSTITUTION NE 'DL773';
 RUN;
 
-DATA &enamesave;      
+DATA &fnamesave;      
   SET ENROLLMENT;														
    	RUN;															 
 															

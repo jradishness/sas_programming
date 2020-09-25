@@ -2,7 +2,7 @@
 /* 2REVIEW is period after census date and before official. Daily changes from clean-up will be seen*/;
 
 LIBNAME MYORALIB oracle user='strdsowner' password='Stt_high5' path='LSRDSPD'  SCHEMA=STRDSOWNER;
-LIBNAME IN1 "S:\UIS\Shared\SAS Data Projects\Simsterm\";
+*LIBNAME IN1 "S:\UIS\Shared\SAS Data Projects\simsterm_records\";
 run;
 
 %let enamesave = "S:\UIS\Shared\SAS Data Projects\enrollment_records\ENROLLEMENT_DW_2020Z_%sysfunc(today(),mmddyy6.)";	*%sysfunc(today(),mmddyy6.) CURRENT ENROLLMENT SAVE DIRECTORY AND NAME;

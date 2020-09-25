@@ -2,14 +2,14 @@
 /* 2REVIEW is period after census date and before official. Daily changes from clean-up will be seen*/;
 
 LIBNAME MYORALIB oracle user='strdsowner' password='Stt_high5' path='LSRDSPD'  SCHEMA=STRDSOWNER;
-LIBNAME IN1 "S:\UIS\Shared\SAS Data Projects\Simsterm\";
+*LIBNAME IN1 "S:\UIS\Shared\SAS Data Projects\simsterm_records\";
 run;
 
-%let enamesave = "S:\UIS\Shared\SAS Data Projects\enrollment_records\ENROLLEMENT_DW_2020Z_%sysfunc(today(),mmddyy6.)";	*%sysfunc(today(),mmddyy6.) CURRENT ENROLLMENT SAVE DIRECTORY AND NAME;
-%let snamesave = "S:\UIS\Shared\SAS Data Projects\simsterm_records\s2020z_%sysfunc(today(),mmddyy6.)";
+%let enamesave = "S:\UIS\Shared\SAS Data Projects\enrollment_records\ENROLLEMENT_DW_2020GIM_%sysfunc(today(),mmddyy6.)";	*%sysfunc(today(),mmddyy6.) CURRENT ENROLLMENT SAVE DIRECTORY AND NAME;
+%let snamesave = "S:\UIS\Shared\SAS Data Projects\simsterm_records\s2020gim_%sysfunc(today(),mmddyy6.)";
 %let run_type = 1CURRENT;		* RUN_TYPE MACRO SETTING - 1CURRENT   2CENSUS_DT  2REVIEW  3OFFICIAL; 
-%let term=1208;			* first digit is ____ (typically a '1'), second and third digit are last two of year, fourth digit is semester (1=spring, 3=summer, 8=fall);
-%let term2=2020Z;		* four digit year, then semester code (Z=fall, C=spring, GIM=summer);
+%let term=1203;			* first digit is ____ (typically a '1'), second and third digit are last two of year, fourth digit is semester (1=spring, 3=summer, 8=fall);
+%let term2=2020GIM;		* four digit year, then semester code (Z=fall, C=spring, GIM=summer);
 
 options symbolgen;
 
